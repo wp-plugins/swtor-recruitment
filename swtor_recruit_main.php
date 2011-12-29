@@ -3,7 +3,7 @@
 *Plugin Name: SWTOR Recruitment
 *Plugin URI: http://imcsoc.com/records/swtor-recruitment
 *Description: An easy to use widget that displays your SWTOR guild's current recruiting needs.
-*Version: 1.0.0
+*Version: 1.1.0
 *Author: Seberius
 */
 
