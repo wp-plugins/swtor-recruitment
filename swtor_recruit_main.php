@@ -3,7 +3,7 @@
 *Plugin Name: SWTOR Recruitment
 *Plugin URI: http://imcsoc.com/records/swtor-recruitment
 *Description: An easy to use widget that displays your SWTOR guild's current recruiting needs.
-*Version: 1.0.0
+*Version: 1.1.0
 *Author: Seberius
 */
 
@@ -34,6 +34,9 @@ add_action('widgets_init', 'swtor_recruitment_init');
 function swtor_recruitment_init() {
     register_widget('SWTOR_Recruitment');
 }
+
+/* Adds language support */
+load_plugin_textdomain( 'swtor-recruitment', null, dirname( plugin_basename( __FILE__ ) ) . '/language/' );
 
 /* Hooks for install/uninstall */
 register_activation_hook(__FILE__, 'swtor_recruitment_install');
@@ -92,14 +95,8 @@ if (!function_exists('swtor_recruitment_uninstall')) {
 
 }
 
-/* A variable to let us pull the status data easily */
+/* A variable to let us use the status data easily */
 $swtor_options = get_option('swtor_recruitment_options');
-
-/* A variable to provide values for the function form */
-$swtor_faction = array(
-	'Empire' => 'Empire',
-	'Republic' => 'Republic',
-);
 
 /* Sets the CSS file to be used */
 wp_enqueue_style('swtor_structure', SWTOR_RCMT_DIR . 'css/style.css');
@@ -111,14 +108,14 @@ class SWTOR_Recruitment extends WP_Widget {
 		
 		$widget_options = array(
 			'classname' => 'swtor-recruitment',
-			'description' => 'A recruitment widget for Star Wars: The Old Republic'
+			'description' => __('A recruitment widget for Star Wars: The Old Republic', 'swtor-recruitment')
 		);
 		
 		$control_options = array (
 			'width' => 250,
 		);
 		
-		$this->WP_Widget('SWTOR-Recruitment', 'SWTOR Recruitment', $widget_options, $control_options);
+		$this->WP_Widget('SWTOR-Recruitment', __('SWTOR Recruitment', 'swtor-recruitment'), $widget_options, $control_options);
 	}
 	
 	/* This creates the widget seen on the site */
@@ -130,30 +127,53 @@ class SWTOR_Recruitment extends WP_Widget {
 		
 		$title = apply_filters('widget_title', $instance['title']);
 		
-		/* Checks if the faction has been set, then sets a variable that is used to call the correct images*/
-		if(isset($instance['current_faction']))
+		/* Checks if the faction has been set, then sets a variable that is used to call the correct images */
+		if(isset($instance['current_faction'])) {
 			if ($instance['current_faction'] == 'Empire') {
 				$current_faction = 'emp';
 			}
 			else {
 				$current_faction = 'rep';
 			};
-			
+		}
+		else {
+			$current_faction = 'emp';
+		};
+		
+		/* Sets a variable that is used to link to the url destination */
+		$current_URL = esc_url($instance['current_url']);
+		
+		/* Checks if the language has been set, then sets a variable that is used to call the correct images */
+		if(isset($instance['current_language'])) {
+			if ($instance['current_language'] == '0') {
+				$current_language = 'en';
+			}
+			else if($instance['current_language'] == '1') {
+				$current_language = 'fr';
+			}
+			else{
+				$current_language = 'de';
+			};
+		}
+		else {
+			$current_language = 'en';
+		};
 		?>
 		
 		<?php echo $before_widget; ?>
 		<?php echo $before_title . $title . $after_title; ?>
-		<div class="swtor-recruitment-style">
+		
+		<div class = "swtor-recruitment-container" onclick = "location.href = '<?php echo $current_URL; ?>'" style = "cursor:pointer;" title = "<?php echo $current_URL; ?>">
 			<!-- Display the faction header -->
-			<div class = "<?php echo 'swtor-' . $current_faction; ?>" ></div>
+			<div class = "<?php echo 'swtor-language-' . $current_language . ' swtor-' . $current_faction; ?>" ></div>
 			<!-- For loop to display the correct classes for each faction.  Uses //$current_faction -->
 			<?php for ($class_num = 0; $class_num <= 3; $class_num++) { ?>
-				<div class = "swtor-class <?php echo 'swtor-' . $current_faction . 'class' . $class_num; ?>" >
+				<div class = "swtor-class <?php echo 'swtor-language-' . $current_language . ' swtor-' . $current_faction . 'class' . $class_num; ?>" >
 					<?php $status_num = $swtor_options[$current_faction . 'class' . $class_num . '-spec0-status']?>
-					<div class = "<?php echo 'swtor-status' . $status_num . ' swtor-spec0' ?>" ></div>
+					<div class = "<?php echo 'swtor-language-' . $current_language . ' swtor-status' . $status_num . ' swtor-spec0' ?>" ></div>
 					
 					<?php $status_num = $swtor_options[$current_faction . 'class' . $class_num . '-spec1-status']?>
-					<div class = "<?php echo 'swtor-status' . $status_num . ' swtor-spec1' ?>" ></div>
+					<div class = "<?php echo 'swtor-language-' . $current_language . ' swtor-status' . $status_num . ' swtor-spec1' ?>" ></div>
 					
 				</div>
 				
@@ -162,8 +182,8 @@ class SWTOR_Recruitment extends WP_Widget {
 		</div>
 		
 		<?php echo $after_widget; ?>
-		<?php
 		
+	<?php
 	}
 	
 	/* Sanitizes input and passes the data to the unique instance of the widget */
@@ -171,7 +191,9 @@ class SWTOR_Recruitment extends WP_Widget {
 		
 		$instance = $old_instance;
 		$instance['title'] = wp_filter_nohtml_kses($new_instance['title']);
+		$instance['current_url'] = esc_url($new_instance['current_url']);
 		$instance['current_faction'] = wp_filter_nohtml_kses($new_instance['current_faction']);
+		$instance['current_language'] = absint($new_instance['current_language']);
 		
 		return $instance;
 		
@@ -180,15 +202,13 @@ class SWTOR_Recruitment extends WP_Widget {
 	/* Creates the title input and faction selection for each unique instance of the widget */
 	function form($instance) {
 		
-		global $swtor_faction;
-		
-		$defaults = array('current_faction' => 'Empire');
+		$defaults = array('current_faction' => 'Empire', 'current_language' => '0');
         $instance = wp_parse_args((array) $instance, $defaults);
 		
 		?>
 		<!-- Title input -->
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title: ', 'swtor-recruitment') ?></label>
 			<input type = "text"
 				   id = "<?php echo $this->get_field_id('title'); ?>"
 				   name = "<?php echo $this->get_field_name('title'); ?>"
@@ -197,13 +217,35 @@ class SWTOR_Recruitment extends WP_Widget {
 			/>
 			
 		</p>
+		<!-- URL input -->
+		<p>
+			<label for="<?php echo $this->get_field_id('current_url'); ?>"><?php _e('Recruitment URL: ', 'swtor-recruitment') ?></label>
+			<input type = "text"
+				   id = "<?php echo $this->get_field_id('current_url'); ?>"
+				   name = "<?php echo $this->get_field_name('current_url'); ?>"
+				   value = "<?php echo $instance['current_url']; ?>"
+				   style = "width: 100%;"
+			/>
+			
+		</p>
 		<!-- Faction selection -->
 		<div>
-			<label for = "<?php echo $this->get_field_id('current_faction'); ?>">Select Faction:</label>
+			<label for = "<?php echo $this->get_field_id('current_faction'); ?>"><?php _e('Select Faction: ', 'swtor-recruitment') ?></label>
 			<select id = "<?php echo $this->get_field_id('current_faction'); ?>" name = "<?php echo $this->get_field_name('current_faction'); ?>" >
                 <?php $current_faction = $instance['current_faction']; ?>
-				<option value = 'Empire' <?php if ($current_faction == 'Empire') { echo 'selected="selected"'; } ?>; >Empire</option>
-                <option value = 'Republic' <?php if ($current_faction == 'Republic') { echo 'selected="selected"'; } ?>; >Republic</option>
+				<option value = 'Empire' <?php if ($current_faction == 'Empire') { echo 'selected="selected"'; } ?>; ><?php _e('Empire', 'swtor-recruitment') ?></option>
+                <option value = 'Republic' <?php if ($current_faction == 'Republic') { echo 'selected="selected"'; } ?>; ><?php _e('Republic', 'swtor-recruitment') ?></option>
+			</select>
+			
+		</div>
+		<!-- Language selection -->
+		<div>
+			<label for = "<?php echo $this->get_field_id('current_language'); ?>"><?php _e('Select Language: ', 'swtor-recruitment') ?></label>
+			<select id = "<?php echo $this->get_field_id('current_language'); ?>" name = "<?php echo $this->get_field_name('current_language'); ?>" >
+                <?php $current_language = $instance['current_language']; ?>
+				<option value = '0' <?php if ($current_language == '0') { echo 'selected="selected"'; } ?>; ><?php _e('English', 'swtor-recruitment') ?></option>
+                <option value = '1' <?php if ($current_language == '1') { echo 'selected="selected"'; } ?>; ><?php _e('French', 'swtor-recruitment') ?></option>
+				<option value = '2' <?php if ($current_language == '2') { echo 'selected="selected"'; } ?>; ><?php _e('German', 'swtor-recruitment') ?></option>
 			</select>
 			
 		</div>
