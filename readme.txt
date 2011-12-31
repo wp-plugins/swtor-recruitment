@@ -4,7 +4,7 @@ Donate Link: http://www.woundedwarriorproject.org/donate.aspx
 Tags: Star Wars, recruitment, SWTOR, guild, Old Republic, guild recruitment
 Requires at least: 3.2
 Tested up to: 3.3
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 
 An easy to use widget that displays your SWTOR guild's current recruiting needs.
 
@@ -44,8 +44,12 @@ Yes! Simply add two SWTOR Recruitment widgets to the same (or different) widget 
 
 == Changelog ==
 
+= 1.1.2 =
+* Code improvements for theme compatibility.
+* This is necessary for themes that have margins declared in CSS with the universal selector "* { }".
+
 = 1.1.1 =
-*A fix for a display issue that was appearing with some themes.
+* A fix for a display issue that was appearing with some themes.
 
 = 1.1.0 =
 * French and German language options for the widget.
@@ -58,6 +62,9 @@ Yes! Simply add two SWTOR Recruitment widgets to the same (or different) widget 
 * Initial Version
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+A code improvement for theme compatibility.  This is optional if you are not experiencing any display issues.
 
 = 1.1.1 =
 A fix for a display issue that was appearing with some themes.

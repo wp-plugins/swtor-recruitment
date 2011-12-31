@@ -3,7 +3,7 @@
 *Plugin Name: SWTOR Recruitment
 *Plugin URI: http://imcsoc.com/records/swtor-recruitment
 *Description: An easy to use widget that displays your SWTOR guild's current recruiting needs.
-*Version: 1.1.1
+*Version: 1.1.2
 *Author: Seberius
 */
 
@@ -163,7 +163,7 @@ class SWTOR_Recruitment extends WP_Widget {
 		<?php echo $before_widget; ?>
 		<?php echo $before_title . $title . $after_title; ?>
 		
-		<div class = "swtor-cleanup swtor-recruitment-container" onclick = "location.href = '<?php echo $current_URL; ?>'" style = "cursor:pointer;" title = "<?php echo $current_URL; ?>">
+		<div class = "swtor-recruitment-container" onclick = "location.href = '<?php echo $current_URL; ?>'" style = "cursor:pointer;" title = "<?php echo $current_URL; ?>">
 			<div class = "<?php echo 'swtor-language-' . $current_language . ' swtor-' . $current_faction; ?>" ></div>
 			<?php for ($class_num = 0; $class_num <= 3; $class_num++) { ?>
 				<div class = "swtor-class <?php echo 'swtor-language-' . $current_language . ' swtor-' . $current_faction . 'class' . $class_num; ?>" >

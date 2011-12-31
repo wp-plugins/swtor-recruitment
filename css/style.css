@@ -1,8 +1,5 @@
 .swtor-recruitment-container {
     width: 100%;
-}
-
-.swtor-cleanup {
     float: none;
     clear: both;
 }
@@ -105,10 +102,12 @@
     position: relative;
     left: 136px;
     top: 24px;
+    margin: 0;
 }
 
 .swtor-spec1 {
     position: relative;
     left: 136px;
     top: 23px;
+    margin: 0;
 }
