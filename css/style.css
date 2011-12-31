@@ -1,9 +1,10 @@
-.swtor-cleanup {
-    clear: both;
-}
-
 .swtor-recruitment-container {
     width: 100%;
+}
+
+.swtor-cleanup {
+    float: none;
+    clear: both;
 }
 
 /* English */

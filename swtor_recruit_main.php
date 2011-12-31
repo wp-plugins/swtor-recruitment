@@ -3,7 +3,7 @@
 *Plugin Name: SWTOR Recruitment
 *Plugin URI: http://imcsoc.com/records/swtor-recruitment
 *Description: An easy to use widget that displays your SWTOR guild's current recruiting needs.
-*Version: 1.1.0
+*Version: 1.1.1
 *Author: Seberius
 */
 
@@ -163,10 +163,8 @@ class SWTOR_Recruitment extends WP_Widget {
 		<?php echo $before_widget; ?>
 		<?php echo $before_title . $title . $after_title; ?>
 		
-		<div class = "swtor-recruitment-container" onclick = "location.href = '<?php echo $current_URL; ?>'" style = "cursor:pointer;" title = "<?php echo $current_URL; ?>">
-			<!-- Display the faction header -->
+		<div class = "swtor-cleanup swtor-recruitment-container" onclick = "location.href = '<?php echo $current_URL; ?>'" style = "cursor:pointer;" title = "<?php echo $current_URL; ?>">
 			<div class = "<?php echo 'swtor-language-' . $current_language . ' swtor-' . $current_faction; ?>" ></div>
-			<!-- For loop to display the correct classes for each faction.  Uses //$current_faction -->
 			<?php for ($class_num = 0; $class_num <= 3; $class_num++) { ?>
 				<div class = "swtor-class <?php echo 'swtor-language-' . $current_language . ' swtor-' . $current_faction . 'class' . $class_num; ?>" >
 					<?php $status_num = $swtor_options[$current_faction . 'class' . $class_num . '-spec0-status']?>
@@ -206,7 +204,6 @@ class SWTOR_Recruitment extends WP_Widget {
         $instance = wp_parse_args((array) $instance, $defaults);
 		
 		?>
-		<!-- Title input -->
 		<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title: ', 'swtor-recruitment') ?></label>
 			<input type = "text"
@@ -217,7 +214,6 @@ class SWTOR_Recruitment extends WP_Widget {
 			/>
 			
 		</p>
-		<!-- URL input -->
 		<p>
 			<label for="<?php echo $this->get_field_id('current_url'); ?>"><?php _e('Recruitment URL: ', 'swtor-recruitment') ?></label>
 			<input type = "text"
@@ -228,7 +224,6 @@ class SWTOR_Recruitment extends WP_Widget {
 			/>
 			
 		</p>
-		<!-- Faction selection -->
 		<div>
 			<label for = "<?php echo $this->get_field_id('current_faction'); ?>"><?php _e('Select Faction: ', 'swtor-recruitment') ?></label>
 			<select id = "<?php echo $this->get_field_id('current_faction'); ?>" name = "<?php echo $this->get_field_name('current_faction'); ?>" >
@@ -237,8 +232,7 @@ class SWTOR_Recruitment extends WP_Widget {
                 <option value = 'Republic' <?php if ($current_faction == 'Republic') { echo 'selected="selected"'; } ?>; ><?php _e('Republic', 'swtor-recruitment') ?></option>
 			</select>
 			
-		</div>
-		<!-- Language selection -->
+		</div>>
 		<div>
 			<label for = "<?php echo $this->get_field_id('current_language'); ?>"><?php _e('Select Language: ', 'swtor-recruitment') ?></label>
 			<select id = "<?php echo $this->get_field_id('current_language'); ?>" name = "<?php echo $this->get_field_name('current_language'); ?>" >
