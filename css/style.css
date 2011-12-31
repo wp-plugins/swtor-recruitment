@@ -1,0 +1,113 @@
+.swtor-recruitment-container {
+    width: 100%;
+    float: none;
+    clear: both;
+}
+
+/* English */
+.swtor-language-en {
+    background-image: url(../images/source-en.png);
+}
+/* French */
+.swtor-language-fr {
+    background-image: url(../images/source-fr.png);
+}
+/* German */
+.swtor-language-de {
+    background-image: url(../images/source-de.png);
+}
+
+.swtor-emp {
+    vertical-align: middle;
+    width: 198px;
+    height: 33px;
+    background-position: 0 -378px;
+}
+
+.swtor-rep {
+    vertical-align: middle;
+    width: 198px;
+    height: 33px;
+    background-position: -198px -378px;
+    
+}
+.swtor-class {
+    vertical-align: middle;
+    width: 198px;
+    height: 75px;
+}
+
+/* Imperial Agent */
+.swtor-empclass0 {
+    background-position: 0 0;
+}
+
+/* Bounty Hunter */
+.swtor-empclass1 {
+    background-position: 0 -75px;
+}
+
+/* Sith Inquisitor */
+.swtor-empclass2 {
+    background-position: 0 -150px;
+}
+
+/* Sith Warrior */
+.swtor-empclass3 {
+    background-position: 0 -225px;
+}
+
+/* Jedi Knight */
+.swtor-repclass0 {
+    background-position: -198px 0;
+}
+
+/* Jedi Consular */
+.swtor-repclass1 {
+    background-position: -198px -75px;
+}
+
+/* Smuggler */
+.swtor-repclass2 {
+    background-position: -198px -150px;
+}
+
+/* Trooper */
+.swtor-repclass3 {
+    background-position: -198px -225px;
+}
+
+/* Open Status */
+.swtor-status2{
+    width: 62px;
+    height: 26px;
+    background-position: 0 -300px;
+}
+
+/* Limited Status */
+.swtor-status1 {
+    width: 62px;
+    height: 26px;
+    background-position: 0 -326px;
+}
+
+/* Closed Status */
+.swtor-status0 {
+    width: 62px;
+    height: 26px;
+    background-position: 0 -352px;
+}
+
+.swtor-spec0 {
+    position: relative;
+    left: 136px;
+    top: 24px;
+    margin: 0;
+}
+
+.swtor-spec1 {
+    position: relative;
+    left: 136px;
+    top: 23px;
+    margin: 0;
+}
